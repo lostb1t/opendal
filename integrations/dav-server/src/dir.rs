@@ -89,7 +89,7 @@ impl DavDirEntry for OpendalDirEntry {
             self.dir_entry
                 //.stat(self.dir_entry.path())
                // .await
-                .metadata
+                .metadata()
                 .map(|metadata| Box::new(OpendalMetaData::new(metadata)) as Box<dyn DavMetaData>)
                 .map_err(convert_error)
         }
