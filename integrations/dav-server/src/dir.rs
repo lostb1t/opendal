@@ -86,12 +86,8 @@ impl DavDirEntry for OpendalDirEntry {
 
     fn metadata(&self) -> dav_server::fs::FsFuture<'_, Box<dyn DavMetaData>> {
         async move {
-            self.dir_entry
-                //.stat(self.dir_entry.path())
-               // .await
-                .metadata()
-                .map(|metadata| Box::new(OpendalMetaData::new(metadata.clone())) as Box<dyn DavMetaData>)
-                .map_err(convert_error)
+            let md = self.dir_entry.metadata().clone();
+            Ok(Box::new(OpendalMetaData::new(md)) as Box<dyn DavMetaData>)
         }
         .boxed()
     }
